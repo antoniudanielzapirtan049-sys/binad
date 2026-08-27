@@ -2,5 +2,5 @@
 
 LOG=$HOME/log.txt
 : >$LOG
-log lau.sh --cold &
+bash log lau.sh --cold &
 tail -f $LOG
