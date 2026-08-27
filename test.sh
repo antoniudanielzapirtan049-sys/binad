@@ -2,6 +2,8 @@
 
 set -e
 
+cat $0
+
 APP="$1"
 
 test -n "$APP"
@@ -11,21 +13,21 @@ test -n "$VER"
 cd ./projects/$APP
 
 if echo "$APP"|grep -qv "^bfc$"; then
-  if ! command -v ffmpeg &>/dev/null; then
+  if ! command -v ffmpeg; then
     if $DEMO; then
-      apt update &>/dev/null || true
-      apt install -y ffmpeg &>/dev/null
+      apt update || true
+      apt install -y ffmpeg
     else
-      brew install ffmpeg &>/dev/null
+      brew install ffmpeg
     fi
   fi
 fi
-pip install -r requirements.txt &>/dev/null
+pip install -r requirements.txt
 if echo "$APP"|grep -q "^diarix$"; then
-  $DEMO || command -v whispermlx &>/dev/null || pip install whispermlx &>/dev/null
+  $DEMO || command -v whispermlx || pip install whispermlx
 fi
 
-python$VER app.py & pid=$!
+log python$VER app.py & pid=$!
 sleep 20
 test -d /proc/$pid
 

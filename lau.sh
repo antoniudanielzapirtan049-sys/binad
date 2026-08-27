@@ -1,6 +1,8 @@
-#! /bin/bash
+! /bin/bash
 
 set -e
+
+cat $0
 
 APPS="$(ls projects)"
 ARG="$1"
@@ -22,15 +24,18 @@ test -n "$VER"
 
 export DEMO VER
 
+flaskill() {
 for PORT in $PORTS; do
   pids="$(lsof -i ":$PORT"|sed -n '2,$p' |cut -f 2)"
   test -n "$pids" && for pid in $pids; do
     test -n "$pid" && test -d /proc/$pid && kill -15 $pid
   done
 done
+}
 
 purge_pip() {
-  command -v deactivate &>/dev/null && deactivate || true
+  flaskill
+  command -v deactivate && deactivate || true
   find . -type d -iname "venv" | xargs rm -rf || true
   find . -type d -iname ".venv" | xargs rm -rf || true
   rm -rf $HOME/.cache/pip || true
@@ -39,11 +44,12 @@ purge_pip() {
   test -n "$VIRTUAL_ENV"
   test -d "$VIRTUAL_ENV"
   export VIRTUAL_ENV
-  pip install --upgrade pip &>/dev/null || true
+  pip install --upgrade pip || true
 }
 
 direct_pip() {
-  command -v deactivate &>/dev/null && deactivate || true
+  flaskill
+  command -v deactivate && deactivate || true
   test -d .venv || python$VER -m venv .venv
   source .venv/bin/activate || return
   test -n "$VIRTUAL_ENV"
@@ -54,7 +60,7 @@ direct_pip() {
 launch_apps() {
   for APP in $APPS; do
     test -n "$APP"
-    bash test.sh "$APP" &>/dev/null
+    log test.sh "$APP"
   done
 }
 

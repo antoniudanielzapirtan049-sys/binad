@@ -2,6 +2,8 @@
 
 set -e
 
+cat $0
+
 DATE=$(date +%y%m%d_%H%M%S_%N)
 OWNER=CorneliuBoboc
 REPO=MONAD
