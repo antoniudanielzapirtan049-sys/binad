@@ -2,15 +2,19 @@
 
 set -e
 
-OWNER="CorneliuBoboc"
-REPO="MONAD"
+DATE=$(date +%y%m%d_%H%M%S_%N)
+OWNER=CorneliuBoboc
+REPO=MONAD
+TARGETDIR=$HOME/.backups/
+
+test -n "$DATE"
 test -n "$OWNER"
 test -n "$REPO"
+test -n "$TARGETDIR"
 
 cd $HOME
-TARGETDIR=$HOME/.backups/
 mkdir -p $TARGETDIR/
-tar -C $HOME -czf $TARGETDIR/${REPO}_$(date +%y%m%d_%H%M%S).tar.gz $REPO
+tar -C $HOME -czf $TARGETDIR/${REPO}_$DATE.tar.gz $REPO
 rm -rf $REPO
 git clone https://github.com/$OWNER/$REPO.git
 cd $REPO
