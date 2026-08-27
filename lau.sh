@@ -9,7 +9,9 @@ PORTS="5030 5034 5005"
 VER="3.12"
 
 DEMO=false
-echo "$OS"|grep -q "^Linux$" && DEMO=true
+if echo "$OS"|grep -q "^Linux$"; then
+	DEMO=true
+fi
 $DEMO && VER="3.13"
 
 test -n "$APPS"
@@ -50,10 +52,9 @@ direct_pip() {
 }
 
 launch_apps() {
-  SCRIPT="test.sh"
   for APP in $APPS; do
     test -n "$APP"
-    bash "$SCRIPT" "$APP" &>/dev/null && echo "Launched $APP ok"
+    bash test.sh "$APP" &>/dev/null
   done
 }
 
