@@ -11,8 +11,14 @@ test -n "$VER"
 cd ./projects/$APP
 
 if echo "$APP"|grep -qv "^bfc$"; then
-  $DEMO || command -v ffmpeg &>/dev/null || brew install ffmpeg &>/dev/null
-  $DEMO && command -v ffmpeg &>/dev/null || apt update && apt install -y ffmpeg &>/dev/null
+  if ! command -v ffmpeg &>/dev/null; then
+    if $DEMO; then
+      apt update &>/dev/null || true
+      apt install -y ffmpeg &>/dev/null
+    else
+      brew install ffmpeg &>/dev/null
+    fi
+  fi
 fi
 pip install -r requirements.txt &>/dev/null
 if echo "$APP"|grep -q "^diarix$"; then
