@@ -5,6 +5,7 @@ set -e
 cat $0
 
 APPS="$(ls projects)"
+: ${AUDIT:=false}
 ARG="$1"
 OS="$(uname)"
 PORTS="5030 5034 5005"
@@ -64,7 +65,6 @@ launch_apps() {
 }
 
 warm=false
-#test -n "$ARG" && echo "$ARG"|grep -q "^--cold$" && warm=false
 echo "Please wait ..."
 if $warm; then
   if direct_pip && launch_apps; then

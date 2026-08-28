@@ -1,8 +1,10 @@
 #! /bin/bash
 
+export AUDIT=true
 LOG=$HOME/log.txt
 : >$LOG
 RAW=$HOME/raw.txt
+pkill tail
 stamp() {
 len=$1
 newlen=$2

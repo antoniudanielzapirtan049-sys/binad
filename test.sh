@@ -5,8 +5,10 @@ set -e
 cat $0
 
 APP="$1"
+: ${AUDIT:=false}
 
 test -n "$APP"
+test -n "$AUDIT"
 test -n "$DEMO"
 test -n "$VER"
 
@@ -30,3 +32,4 @@ fi
 python$VER app.py & pid=$!
 sleep 20
 test -d /proc/$pid
+$AUDIT && kill -9 $pid
