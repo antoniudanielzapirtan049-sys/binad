@@ -2,8 +2,27 @@
 
 LOG=$HOME/log.txt
 : >$LOG
-./log $@ &
+RAW=$HOME/raw.txt
+stamp() {
+len=$1
+newlen=$2
+len1=$(($len + 1))
+for n in $(seq $len1 $newlen); do
+DATE="$(date +%s%N)"
+LINE="$(cat $RAW|head -n $n|tail -n 1)" || true
+test -n "$LINE" && echo "$DATE	$LINE" >>$LOG
+done >>$LOG
+}
+len=0
+$@ &>$RAW & pid=$!
 tail -f $LOG &
-wait
+while true; do
+newlen=$(cat $RAW|wc -l)
+if [ $newlen -gt $len ]; then
+stamp $len $newlen
+len=$newlen
+fi
+sleep 0.02
+done
 echo ""
 echo "Done"
