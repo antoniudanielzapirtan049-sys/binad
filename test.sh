@@ -27,7 +27,7 @@ if echo "$APP"|grep -q "^diarix$"; then
   $DEMO || command -v whispermlx || pip install whispermlx
 fi
 
-log python$VER app.py & pid=$!
+python$VER app.py & pid=$!
 sleep 20
 test -d /proc/$pid
-
+kill $pid

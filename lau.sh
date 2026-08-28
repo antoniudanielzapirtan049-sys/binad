@@ -36,9 +36,8 @@ done
 purge_pip() {
   flaskill
   command -v deactivate && deactivate || true
-  find . -type d -iname "venv" | xargs rm -rf || true
-  find . -type d -iname ".venv" | xargs rm -rf || true
   rm -rf $HOME/.cache/pip || true
+  rm -rf .venv venv || true
   python$VER -m venv .venv
   source .venv/bin/activate
   test -n "$VIRTUAL_ENV"
@@ -60,12 +59,12 @@ direct_pip() {
 launch_apps() {
   for APP in $APPS; do
     test -n "$APP"
-    log test.sh "$APP"
+    bash test.sh "$APP"
   done
 }
 
-warm=true
-test -n "$ARG" && echo "$ARG"|grep -q "^--cold$" && warm=false
+warm=false
+#test -n "$ARG" && echo "$ARG"|grep -q "^--cold$" && warm=false
 echo "Please wait ..."
 if $warm; then
   if direct_pip && launch_apps; then
