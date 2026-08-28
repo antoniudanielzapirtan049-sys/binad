@@ -30,4 +30,3 @@ fi
 python$VER app.py & pid=$!
 sleep 20
 test -d /proc/$pid
-kill $pid
