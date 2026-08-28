@@ -2,7 +2,7 @@
 LOG=$HOME/log.txt
 RAW=$HOME/raw.txt
 SOURCE="$1"
-/usr/bin/bash $SOURCE &>$RAW & pid=$!
+$SOURCE &>$RAW & pid=$!
 pid_exists() {
 pid="$1"
 test -n "$pid"
