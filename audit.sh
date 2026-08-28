@@ -1,5 +1,6 @@
 #! /bin/bash
 
+export AUDIT=true
 LOG=$HOME/log.txt
 : >$LOG
 RAW=$HOME/raw.txt
@@ -25,5 +26,6 @@ fi
 sleep 0.02
 test -d /proc/$pid || break
 done
+wait
 echo ""
 echo "Done"
