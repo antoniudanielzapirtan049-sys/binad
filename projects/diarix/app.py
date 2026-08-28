@@ -791,7 +791,7 @@ def download_zip():
 # --------------------------------------------------------------------------
 
 INDEX_HTML = r"""
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -842,6 +842,7 @@ main{flex:1 1 auto; min-height:0; display:flex; padding:16px 22px 22px;}
   overflow:hidden;
 }
 
+.donsole{height: 80px; background-color: yellow; color: red; overflow-y: auto; overflow: auto;}
 .tabs{flex:1; min-height:0; display:flex; flex-direction:column;}
 .tab-nav{
   flex:0 0 auto; display:flex; border-bottom:1px solid var(--border); background:var(--panel-2);
@@ -1042,6 +1043,8 @@ footer{flex:0 0 auto; padding:9px 22px; text-align:center; font-size:11px; color
 
 <main>
   <div class="main-container">
+    <div class="donsole">
+    </div>
     <div class="tabs">
       <div class="tab-nav">
         <button class="tab-btn active" data-tab="load"><span class="eyebrow">01</span>Load media</button>
@@ -1224,12 +1227,14 @@ footer{flex:0 0 auto; padding:9px 22px; text-align:center; font-size:11px; color
 <div class="toast" id="toast"></div>
 
 <script>
+const donsole = document.querySelector(".donsole");
 const state = { kind:null, duration:0, chunks:[], segments:[], selectedFormat:null, youtubeFormats:[] };
 
 // ---------- utils ----------
 function toast(msg){
   const t = document.getElementById('toast');
   t.textContent = msg;
+  donsole.innerHTML += `${msg}`;
   t.classList.add('show');
   clearTimeout(toast._h);
   toast._h = setTimeout(()=>t.classList.remove('show'), 120000);

@@ -4,6 +4,7 @@ export AUDIT=true
 LOG=$HOME/log.txt
 : >$LOG
 RAW=$HOME/raw.txt
+pkill tail
 stamp() {
 len=$1
 newlen=$2
@@ -26,6 +27,5 @@ fi
 sleep 0.02
 test -d /proc/$pid || break
 done
-wait
 echo ""
 echo "Done"

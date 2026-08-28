@@ -32,4 +32,4 @@ fi
 python$VER app.py & pid=$!
 sleep 20
 test -d /proc/$pid
-$AUDIT && kill $pid
+$AUDIT && kill -9 $pid
