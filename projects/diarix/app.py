@@ -1234,7 +1234,8 @@ const state = { kind:null, duration:0, chunks:[], segments:[], selectedFormat:nu
 function toast(msg){
   const t = document.getElementById('toast');
   t.textContent = msg;
-  donsole.innerHTML += `${msg}`;
+  const date = new Date();
+  donsole.innerHTML += `${date} ${msg}`;
   t.classList.add('show');
   clearTimeout(toast._h);
   toast._h = setTimeout(()=>t.classList.remove('show'), 120000);
