@@ -14,7 +14,7 @@ test -n "$LINE" && echo "$DATE	$LINE" >>$LOG
 done >>$LOG
 }
 len=0
-$@ &>$RAW & pid=$!
+bash lau.sh &>$RAW & pid=$!
 tail -f $LOG &
 while true; do
 newlen=$(cat $RAW|wc -l)
@@ -23,6 +23,7 @@ stamp $len $newlen
 len=$newlen
 fi
 sleep 0.02
+test -d /proc/$pid || break
 done
 echo ""
 echo "Done"
